@@ -1,0 +1,53 @@
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* See LICENSE.md in the project root for license terms and full copyright notice.
+*--------------------------------------------------------------------------------------------*/
+@import '~@itwin/itwinui-css/scss/variables';
+
+.gradient-window {
+  display: inherit;
+  flex-direction: inherit;
+  gap: $iui-baseline;
+  margin-bottom: $iui-baseline;
+}
+
+.gradient {
+  height: 100px;
+  background-color: red;
+  background-image:
+    linear-gradient(
+      to right,
+      hsl(216, 100%, 50%),
+      hsl(180, 100%, 50%),
+      hsl(144, 100%, 50%),
+      hsl(108, 100%, 50%),
+      hsl(72, 100%, 50%),
+      hsl(36, 100%, 50%),
+      hsl(0, 100%, 50%),
+    );
+  border-radius: 5px;
+}
+
+.gradient-label {
+  line-height: 20px;
+  background: white;
+  padding: 10px;
+  margin: 30px 10px;
+  font-size: 20px;
+  font-weight: 600;
+  border-radius: 3px;
+}
+
+.gradient-label-min {
+  float: left;
+}
+
+.gradient-label-max {
+  float: right;
+}
+
+.gradient-label-axis {
+  height: 4px;
+  background-color: white;
+  margin: 48px 0;
+}

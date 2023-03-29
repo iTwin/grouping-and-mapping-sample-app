@@ -1,0 +1,40 @@
+/*---------------------------------------------------------------------------------------------
+* Copyright (c) Bentley Systems, Incorporated. All rights reserved.
+* See LICENSE.md in the project root for license terms and full copyright notice.
+*--------------------------------------------------------------------------------------------*/
+@import '~@itwin/itwinui-css/scss/variables';
+
+.odata-data-table {
+  display: inherit;
+  flex-direction: inherit;
+  gap: $iui-baseline;
+  margin-bottom: $iui-baseline;
+}
+
+.table {
+  padding: $iui-baseline;
+  display: grid;
+  row-gap: $iui-baseline;
+  overflow: hidden;
+  column-width: auto;
+
+  .iui-table {
+    overflow: auto;
+  }
+
+  .iui-cell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.count-div {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.count-text {
+  font-weight: 600;
+  margin-right: 4px;
+}
