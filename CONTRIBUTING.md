@@ -23,7 +23,7 @@ Please make sure to follow these steps for running this code sample application:
 1. Clone this repository.
 1. Make sure npm is installed on your machine.
 1. Register a new SPA in [My Apps](https://developer.bentley.com/my-apps/) in the iTwin Developer Portal with:
-  - Scopes: ``
+  - Scopes: `imodelaccess:read imodels:read realitydata:read insights:read insights:modify projects:read`
   - Redirect Urls: `https://localhost:3000/signin-oidc`
 1. Optional: Create an [empty iModel](https://developer.bentley.com/my-imodels/). Note down the `iTwinID` and `iModelID`. You may also use any other known `iTwinID` and `iModelID` combination instead of creating a new one.
 1. Create a copy of the [template .env file](/.env.template) with the name `.env` in the root of the project directory. Then populate the fields:
