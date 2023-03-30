@@ -3,13 +3,14 @@
 
 ## About the Code
 
-This collection of widgets is a demonstration of how one would take data prepared on the iTwin Reporting Platform using Grouping and Mapping and consume it in a custom web application. The Embodied Carbon Widget takes Reporting data for any given iModel and re-colors elements in the 3D Viewer based on the values of a specified numeric data table column. Warmer colors (red) indicate larger values. And cooler colors (blue, green) indicate smaller values. This can be useful for visualizing all sorts of data gradients in the 3D Viewer such as embodied carbon, lead times, cost, etc. The Procurement Widget creates a summary report of element counts given a set of grouping criteria defined using Grouping and Mapping Properties. Finally the Raw OData Widget is just a raw representation of the data being used to populate the other two workflow-oriented widgets.
+This sample application with its collection of widgets is a demonstration of how one would take data prepared on the iTwin Reporting Platform using Grouping and Mapping and consume it in a custom web application. The Embodied Carbon Widget takes Reporting data for any given iModel and re-colors elements in the 3D Viewer based on the values of a specified numeric data table column. Warmer colors (red) indicate larger values. And cooler colors (blue, green) indicate smaller values. This can be useful for visualizing all sorts of data gradients in the 3D Viewer such as embodied carbon, lead times, cost, etc. The Procurement Widget creates a summary report of element counts given a set of grouping criteria defined using Grouping and Mapping Properties. Finally the Raw OData Widget is just a raw representation of the data being used to populate the other two workflow-oriented widgets. To tie it together we also have the Grouping & Mapping widget which assists with creating and managing Mappings and Groups against the Reporting Platform APIs.
 
 This sample application takes advantage of the [@itwin/insights-client](https://www.npmjs.com/package/@itwin/insights-client) npm package for easy access to the [Reporting APIs](https://developer.bentley.com/apis/insights/overview/). It also contains client code for consuming the [iModels OData API](https://developer.bentley.com/apis/imodels-odata/).
 
 **Note: the [provided OData client](/src/contexts/imodels-odata-client/README.md) for the iModels OData API is just sample code written for this course and carries no guanrantees for robustness or performance.**
 
 ## Bootstrap
+If you would like to create your own application from scratch covering workflows similar to those in this sample, you can bootstrap your project with the following commands:
 
 1. create-react-app
 2. install @itwin/grouping-mapping-widget
@@ -35,6 +36,8 @@ IMJS_AUTH_CLIENT_SCOPES =""
   - **Visualization**: `imodelaccess:read`
   - **iModels**: `imodels:read`
   - **Reality Data**: `realitydata:read`
+  - **Projects**: `projects:read`
+  - **Reporting**: `insights:read insights:modify`
 
 - The application will use the path of the redirect URI to handle the redirection, it must simply match what is defined in your client.
 
