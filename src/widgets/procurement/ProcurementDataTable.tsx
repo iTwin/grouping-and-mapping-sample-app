@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import "./ProcurementDataTable.scss";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { QuantityType } from "@itwin/insights-client";
 import { Fieldset, Table } from "@itwin/itwinui-react";
 import { ODataEntityValue, ODataTable } from "../../contexts/imodels-odata-client/interfaces/OData";
@@ -42,6 +42,25 @@ export interface ProcurementTableItem {
  const ProcurementDataTable = ({ tableData, tableMetadata, quantityMetadata, isLoading, onSelect }: ProcurementTableProps) => {
   const [procurementData, setProcurementData] = useState<ProcurementTableItem[] | undefined>();
   const [totalCount, setTotalCount] = useState<number>(0);
+  // Define the column headers for the table
+  const columns = useMemo(() => {
+    return [
+      ...tableMetadata?.columns
+        .filter((x) => !defaultProps?.includes(x.name))
+        .map((x) => ({ 
+          id: x.name, 
+          Header: `${x.name} ${(() => {
+            const propLookup = quantityMetadata?.properties.filter((p) => p.name === x.name);
+            const hasQuantity = propLookup && propLookup.length > 0 && propLookup[0].quantityType !== QuantityType.Undefined;
+            return hasQuantity
+              ? `(${quantityTypeToDisplayUnits(propLookup[0].quantityType)})`
+              : "";
+          })()}`, 
+          accessor: x.name, }))
+      ?? [],
+      ...procurementData ? [{ id: "Count", Header: "Count", accessor: "count" }] : [],
+    ]
+  }, [tableMetadata, quantityMetadata, procurementData]);
 
   /** When new Table (Group) data is received, reset any emphasized elements in the 3D Viewer. */
   useEffect(() => {
@@ -127,22 +146,7 @@ export interface ProcurementTableItem {
             <Table
               columns={[{
                 Header: "Header name",
-                columns: [
-                  ...tableMetadata?.columns
-                    .filter((x) => !defaultProps?.includes(x.name))
-                    .map((x) => ({ 
-                      id: x.name, 
-                      Header: `${x.name} ${(() => {
-                        const propLookup = quantityMetadata?.properties.filter((p) => p.name === x.name);
-                        const hasQuantity = propLookup && propLookup.length > 0 && propLookup[0].quantityType !== QuantityType.Undefined;
-                        return hasQuantity
-                          ? `(${quantityTypeToDisplayUnits(propLookup[0].quantityType)})`
-                          : "";
-                      })()}`, 
-                      accessor: x.name, }))
-                  ?? [],
-                  ...procurementData ? [{ id: "Count", Header: "Count", accessor: "count" }] : [],
-                ]
+                columns,
               }]}
               data={[...procurementData?.values() ?? []]}
               emptyTableContent="No data."

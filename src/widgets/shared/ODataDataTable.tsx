@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import "./ODataDataTable.scss";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { Group, QuantityType } from "@itwin/insights-client";
 import { Fieldset, Table } from "@itwin/itwinui-react";
 import { ODataEntityValue, ODataTable } from "../../contexts/imodels-odata-client/interfaces/OData";
@@ -42,6 +42,7 @@ interface ODataTableProps {
  *   of data and see the corresponding elements emphasized in the 3D Viewer.
  */
 const ODataDataTable = ({ tableData, tableMetadata, quantityMetadata, isLoading, onSelect, columnMask }: ODataTableProps) => {
+  // Define the column headers for the table
   const columns = useMemo(() => {
     return tableMetadata?.columns
       .filter((x) => !columnMask?.includes(x.name))
