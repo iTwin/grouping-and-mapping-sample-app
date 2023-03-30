@@ -10,12 +10,12 @@ This sample application takes advantage of the [@itwin/insights-client](https://
 **Note: the [provided OData client](/src/contexts/imodels-odata-client/README.md) for the iModels OData API is just sample code written for this course and carries no guanrantees for robustness or performance.**
 
 ## Bootstrap
-If you would like to create your own application from scratch covering workflows similar to those in this sample, you can bootstrap your project with the following commands:
+If you would like to create your own application from scratch covering workflows similar to those in this sample, you can bootstrap your project with the following commands assuming you have the necessary [dependencies](/CONTRIBUTING.md) installed:
 
-1. create-react-app
-2. install @itwin/grouping-mapping-widget
-3. install @itwin/insights-client
-4. install @itwin/itwinui-icons-react
+1. `npx create-react-app your-app-name --template @itwin/web-viewer --scripts-version @bentley/react-scripts`
+2. `install @itwin/grouping-mapping-widget`
+3. `install @itwin/insights-client`
+4. `install @itwin/itwinui-icons-react`
 
 ## Environment Variables
 
