@@ -30,8 +30,8 @@ import {
   ViewerStatusbarItemsProvider,
 } from "@itwin/web-viewer-react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-
 import { history } from "./history";
+
 
 //#region START EDITS - Imports
 
@@ -45,7 +45,7 @@ import { ProcurementWidgetProvider } from "./widgets/procurement/ProcurementWidg
 
 //#endregion
 
-//#region START EDITS - Init Reporting API Clients 
+//#region START EDITS - Init Reporting API Clients
 
 const mappingsClient = new MappingsClient();
 const iModelsOdataClient = new IModelsOdataClient();
@@ -178,7 +178,7 @@ const App: React.FC = () => {
 
 {/* #region START EDITS - Viewer Component Modifications */}
 
-      {/* Here we inject the InsightsClientsContext Provider to give access to the Reporting API client to our Heatmap component. */}
+      {/* Here we inject the InsightsClientsContext Provider to give access to the Reporting API client to our widgets. */}
       <InsightsClientsContext.Provider value={insightsClients}>
         <Viewer
           iTwinId={iTwinId ?? ""}

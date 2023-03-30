@@ -1,5 +1,5 @@
-# This app was bootstrapped using the iTwin Viewer Create React App Template
-[Create React App](https://github.com/facebook/create-react-app).
+# iTwin Platform - Grouping and Mapping Sample App
+This app was bootstrapped using the iTwin Viewer [Create React App](https://github.com/facebook/create-react-app) Template.
 
 ## About the Code
 
