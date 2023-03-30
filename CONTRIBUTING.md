@@ -13,11 +13,26 @@ Want to contribute by creating a pull request? Great! [Fork this repository](htt
 ## Prerequisites
 
 - [Git](https://git-scm.com/)
-`FIXME: `
+- [Node](https://nodejs.org/en/)
+- [Visual Studio Code](https://code.visualstudio.com/) - or an editor of your choice
 
 ## Development Setup
 
-FIXME
+Please make sure to follow these steps for running this code sample application:
+
+1. Clone this repository.
+1. Make sure npm is installed on your machine.
+1. Register a new SPA in [My Apps](https://developer.bentley.com/my-apps/) in the iTwin Developer Portal with:
+  - Scopes: ``
+  - Redirect Urls: `https://localhost:3000/signin-oidc`
+1. Optional: Create an [empty iModel](https://developer.bentley.com/my-imodels/). Note down the `iTwinID` and `iModelID`. You may also use any other known `iTwinID` and `iModelID` combination instead of creating a new one.
+1. Create a copy of the [template .env file](/.env.template) with the name `.env` in the root of the project directory. Then populate the fields:
+  - `IMJS_AUTH_CLIENT_CLIENT_ID = clientID` - the `clientID` generated when you registered a new SPA.
+  - `IMJS_AUTH_CLIENT_REDIRECT_URI = "https://localhost:3000/signin-oidc"`
+  - `IMJS_ITWIN_ID = iTwinID` - the `iTwinID` generated when creating your sample iModel.
+  - `IMJS_IMODEL_ID = iModelID` - the `iModelID` generated when creating your sample iModel.
+1. Run `npm install` in command line to install required packages.
+1. Run `npm start` to run the application. Navigate to https://localhost:3000 in your browser.
 
 ---
 
