@@ -9,7 +9,7 @@ import { QuantityType } from "@itwin/insights-client";
 import { Fieldset, Table } from "@itwin/itwinui-react";
 import { ODataEntityValue, ODataTable } from "../../contexts/imodels-odata-client/interfaces/OData";
 import { quantityTypeToDisplayUnits, roundTo3 } from "../shared/dataUtils";
-import { GroupMetadata } from "../shared/ODataDataTable";
+import { GroupMetadata } from "../raw-odata/ODataDataTable";
 
 /** Properties added by reporting that we will ignore for Procurement. */
 const defaultProps = [ "ECInstanceId", "ECClassId", "BBoxLow", "BBoxHigh", "UserLabel" ];

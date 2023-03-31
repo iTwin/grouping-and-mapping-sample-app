@@ -8,7 +8,7 @@ import { useEffect, useMemo } from "react";
 import { Group, QuantityType } from "@itwin/insights-client";
 import { Fieldset, Table } from "@itwin/itwinui-react";
 import { ODataEntityValue, ODataTable } from "../../contexts/imodels-odata-client/interfaces/OData";
-import { quantityTypeToDisplayUnits } from "./dataUtils";
+import { quantityTypeToDisplayUnits } from "../shared/dataUtils";
 
 /** Helper interface used for Group metadata */
 export interface GroupMetadata {
