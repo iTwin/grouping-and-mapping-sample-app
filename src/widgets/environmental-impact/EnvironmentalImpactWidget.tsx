@@ -209,7 +209,7 @@ const EnvironmentalImpactWidget = () => {
       iModelConnection.iModelId!,
       iModelConnection.changeset.id,
       mappingId!,
-      { name: "", url: groupName });
+      { name: "", url: groupMetadata.name });
 
     
     if (!groupData) {
