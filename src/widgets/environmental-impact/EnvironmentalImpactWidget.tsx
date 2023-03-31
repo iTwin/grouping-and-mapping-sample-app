@@ -193,10 +193,10 @@ const EnvironmentalImpactWidget = () => {
   }
 
   /** Handles configuration change events from the DataSelectionFieldset component. */
-  const onChangeConfiguration = useCallback(async (mappingId: string | null, tableMetaData: ODataTable | null, propertyName: string | null) => {
+  const onChangeConfiguration = useCallback(async (mappingId: string | null, groupMetadata: ODataTable | null, propertyName: string | null) => {
     setIsLoading(true);
     // if any of the required configurations are unset, don't do anything
-    if (!mappingId || !tableMetaData || !propertyName) {
+    if (!mappingId || !groupMetadata || !propertyName) {
       return;
     }
     
@@ -217,7 +217,7 @@ const EnvironmentalImpactWidget = () => {
     }
 
     // load metadata for the selected group
-    let metadata = await loadMetadata(accessToken, iModelConnection, insightsClients, mappingId, tableMetaData.name, propertyName);
+    let metadata = await loadMetadata(accessToken, iModelConnection, insightsClients, mappingId, groupMetadata.name, propertyName);
     setQuantityType(metadata?.properties[0].quantityType);
 
     // filter null/undefined values out of groupData
