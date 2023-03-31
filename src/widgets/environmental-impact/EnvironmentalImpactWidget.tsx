@@ -41,21 +41,6 @@ const EnvironmentalImpactWidget = () => {
   const [valueBounds, setValueBounds] = useState<{ min: number, max: number } | undefined>();
   const [quantityType, setQuantityType] = useState<QuantityType | undefined>(QuantityType.Undefined);
 
-  /** Helper function for loading data from a specified group. */
-  const loadGroupData = async (accessToken: string | undefined, iModelConnection: IModelConnection | undefined, insightsClients: InsightsClients, mappingId: string, groupName: string) => {
-    // validate the iModelConnection is established and fetch the raw Group Table data
-    if (!iModelConnection || !iModelConnection.iTwinId || !iModelConnection.iModelId || !iModelConnection.changeset || !accessToken || !mappingId) {
-      return;
-    }
-
-    return await insightsClients.iModelsOdataClient.getODataReportEntities(
-      accessToken,
-      iModelConnection.iModelId!,
-      iModelConnection.changeset.id,
-      mappingId!,
-      { name: "", url: groupName });
-  };
-
   /** Helper function for loading metadata from a specified group and property. */
   const loadMetadata = async (accessToken: string | undefined, iModelConnection: IModelConnection | undefined, insightsClients: InsightsClients, mappingId: string, groupName: string, propertyName: string) => {
     // validate the iModelConnection is established and fetch the raw Group Table data
@@ -215,8 +200,18 @@ const EnvironmentalImpactWidget = () => {
       return;
     }
     
-    // load data for the selected group
-    let groupData = await loadGroupData(accessToken, iModelConnection, insightsClients, mappingId, tableMetaData.name);
+    // validate the iModelConnection is established and fetch the raw Group Table data
+    if (!iModelConnection || !iModelConnection.iTwinId || !iModelConnection.iModelId || !iModelConnection.changeset || !accessToken || !mappingId) {
+      return;
+    }
+    let groupData = await insightsClients.iModelsOdataClient.getODataReportEntities(
+      accessToken,
+      iModelConnection.iModelId!,
+      iModelConnection.changeset.id,
+      mappingId!,
+      { name: "", url: groupName });
+
+    
     if (!groupData) {
       return;
     }
