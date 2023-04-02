@@ -20,14 +20,14 @@ export class ProcurementWidgetProvider implements UiItemsProvider {
     const widgets: AbstractWidgetProps[] = [];
 
     if (_location === StagePanelLocation.Bottom && _section === StagePanelSection.Start) {
-      const heatmapWidget: AbstractWidgetProps = {
+      const procurementWidget: AbstractWidgetProps = {
         id: "ProcurementWidget",
         label: "Procurement",
         getWidgetContent: () => {
           return <ProcurementWidget />;
         }
       }
-      widgets.push(heatmapWidget);
+      widgets.push(procurementWidget);
     }
     return widgets;
   }
