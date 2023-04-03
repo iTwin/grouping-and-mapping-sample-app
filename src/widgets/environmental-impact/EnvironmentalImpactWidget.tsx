@@ -18,7 +18,7 @@ import { GroupMetadata } from "../raw-odata/ODataDataTable";
 import { getHiliteIds, zoomToElements } from "../shared/viewerUtils";
 import GradientLegend from "./GradientLegend";
 
-const numericODataTypes = [ "Edm.Int16", "Edm.Int32", "Edm.Int64", "Edm.Single", "Edm.Double", "Edm.Decimal" ];
+const numericODataTypes = ["Edm.Int16", "Edm.Int32", "Edm.Int64", "Edm.Single", "Edm.Double", "Edm.Decimal"];
 
 /** Helper interface used when splitting */
 interface HeatmapDataBin {
@@ -109,7 +109,7 @@ const EnvironmentalImpactWidget = () => {
     if (!IModelApp.viewManager.selectedView) {
       return;
     }
-    
+
     // clear the old heatmap
     const vp = IModelApp.viewManager.selectedView;
     const emph = EmphasizeElements.getOrCreate(vp);
@@ -117,7 +117,7 @@ const EnvironmentalImpactWidget = () => {
     emph.wantEmphasis = true;
 
     // generate the new heatmap
-    
+
     // calculate the range of values
     const targetColData = groupData.map(row => row[propertyName] as number);
     const minVal = Math.min(...targetColData);
@@ -154,18 +154,19 @@ const EnvironmentalImpactWidget = () => {
         if (bin.data.length <= groupData.length * overloadedBinThreshold) {
           continue;
         }
-        
+
         // mark for split and instantiate new bins
         bin.wasSplit = true;
         const segmentSize = (bin.max - bin.min) / splitsPerIteration;
         const newBins: HeatmapDataBin[] = [];
         for (let i = 0; i < splitsPerIteration; i++) {
-          newBins.push({ 
+          newBins.push({
             depth: currIter + 1,
             data: [],
             min: bin.min + segmentSize * i,
             max: bin.min + segmentSize * (i + 1),
-            wasSplit: false });
+            wasSplit: false
+          });
         }
 
         // distribute data into new bins
@@ -177,7 +178,7 @@ const EnvironmentalImpactWidget = () => {
         bins = [...bins, ...newBins];
       }
     }
-    
+
     // iterate over all elements and apply Heatmap color
     let allElements = [];
     for (const bin of bins) {
@@ -186,7 +187,7 @@ const EnvironmentalImpactWidget = () => {
       emph.overrideElements(hiliteSet, vp, colorDef, undefined, false);
       allElements.push(...hiliteSet);
     }
-    
+
     // emphasize the relevant elements
     emph.emphasizeElements(allElements, vp);
     await zoomToElements(allElements);
@@ -199,7 +200,7 @@ const EnvironmentalImpactWidget = () => {
     if (!mappingId || !groupMetadata || !propertyName) {
       return;
     }
-    
+
     // validate the iModelConnection is established and fetch the raw Group Table data
     if (!iModelConnection || !iModelConnection.iTwinId || !iModelConnection.iModelId || !iModelConnection.changeset || !accessToken || !mappingId) {
       return;
@@ -211,7 +212,7 @@ const EnvironmentalImpactWidget = () => {
       mappingId!,
       { name: "", url: groupMetadata.name });
 
-    
+
     if (!groupData) {
       return;
     }
@@ -227,14 +228,14 @@ const EnvironmentalImpactWidget = () => {
     await generateHeatmap(groupData, propertyName);
     setIsLoading(false);
   }, [iModelConnection, accessToken, insightsClients]);
-  
+
   return (
     <div className='widget-container'>
       <DataSelectionFieldset onChange={onChangeConfiguration} allowedDataTypes={numericODataTypes} />
-      { isLoading &&
-        <ProgressRadial indeterminate className="progress-spinner"/>
+      {isLoading &&
+        <ProgressRadial indeterminate className="progress-spinner" />
       }
-      { valueBounds && quantityType &&
+      {valueBounds && quantityType &&
         <GradientLegend maxVal={valueBounds.max} minVal={valueBounds.min} quantityType={quantityType} title="Embodied Carbon" />
       }
     </div>

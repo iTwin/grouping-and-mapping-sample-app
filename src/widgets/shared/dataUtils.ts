@@ -12,7 +12,7 @@ export const roundTo3 = (val: number) => {
 
 /** Helper function to round QuantityTypes to SI display units. */
 export const quantityTypeToDisplayUnits = (quantityType: QuantityType) => {
-  switch(quantityType) {
+  switch (quantityType) {
     case QuantityType.Area:
       return "m\u00B2";
     case QuantityType.Distance:

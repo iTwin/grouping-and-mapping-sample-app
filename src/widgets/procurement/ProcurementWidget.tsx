@@ -94,11 +94,11 @@ const ProcurementWidget = () => {
     if (!groupData) {
       return;
     }
-    
+
     // ensure IModelApp selectedView is available
     if (!IModelApp.viewManager.selectedView) {
       return;
-    }    
+    }
 
     // clear the old selection
     const vp = IModelApp.viewManager.selectedView;
@@ -115,7 +115,7 @@ const ProcurementWidget = () => {
       await zoomToElements(hiliteSet);
       return;
     }
-    
+
     // emphasize the relevant elements
     let selected: string[] = [];
     for (const row of selectedData) {
@@ -135,7 +135,7 @@ const ProcurementWidget = () => {
     if (!mappingId || !groupMetadata) {
       return;
     }
-    
+
     // validate the iModelConnection is established and fetch the raw Group Table data
     if (!iModelConnection || !iModelConnection.iTwinId || !iModelConnection.iModelId || !iModelConnection.changeset || !accessToken || !mappingId) {
       return;
@@ -159,9 +159,9 @@ const ProcurementWidget = () => {
 
   return (
     <div className='widget-container'>
-      <DataSelectionFieldset onChange={onChangeConfiguration} hidePropertySelect={true}/>
-      { isLoading &&
-        <ProgressRadial indeterminate className="progress-spinner"/>
+      <DataSelectionFieldset onChange={onChangeConfiguration} hidePropertySelect={true} />
+      {isLoading &&
+        <ProgressRadial indeterminate className="progress-spinner" />
       }
       <ProcurementDataTable tableData={groupData} tableMetadata={groupMetadata} quantityMetadata={quantityMetadata} isLoading={isLoading} onSelect={onChangeTableSelection} />
     </div>

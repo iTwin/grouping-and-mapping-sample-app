@@ -176,7 +176,7 @@ const App: React.FC = () => {
         </FillCentered>
       )}
 
-{/* #region START EDITS - Viewer Component Modifications */}
+      {/* #region START EDITS - Viewer Component Modifications */}
 
       {/* Here we inject the InsightsClientsContext Provider to give access to the Reporting API client to our widgets. */}
       <InsightsClientsContext.Provider value={insightsClients}>
@@ -200,7 +200,7 @@ const App: React.FC = () => {
               enableCopyingPropertyText: true,
             }),
             new MeasureToolsUiItemsProvider(),
-            
+
             // Add the GroupingMappingWidget, ProcurementWidget, EnvironmentalImpactWidget, and RawODataWidget to the Viewer here.
             new GroupingMappingProvider(),
             new ProcurementWidgetProvider(),
@@ -210,7 +210,7 @@ const App: React.FC = () => {
         />
       </InsightsClientsContext.Provider>
 
-{/* #endregion */}
+      {/* #endregion */}
 
     </div>
   );

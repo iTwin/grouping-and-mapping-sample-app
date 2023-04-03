@@ -59,7 +59,7 @@ export const manufactureKeys = async (
   const batchSize = 1000;
   const batches: AsyncIterableIterator<any>[] = [];
   const iModelConnection = vp.iModel;
-  
+
   for (let i = 0; i < elementIds.length; i += batchSize) {
     const batchIds = elementIds.slice(i, i + batchSize);
     const params = batchIds.map((_) => "?").join(",");

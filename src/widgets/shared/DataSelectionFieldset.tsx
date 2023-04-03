@@ -122,7 +122,7 @@ const DataSelectionFieldset = ({ onChange, hidePropertySelect, allowedDataTypes 
           }}
         />
       </div>
-      { !hidePropertySelect && 
+      {!hidePropertySelect &&
         <div className="data-selection-fieldset-row">
           <LabeledSelect<string | undefined>
             label={"Property"}

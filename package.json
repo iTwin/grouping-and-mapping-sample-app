@@ -5,7 +5,6 @@
   "dependencies": {
     "@bentley/icons-generic": "^1.0.34",
     "@bentley/react-scripts": "^5.0.4",
-    "@itwin/appui-abstract": "^3.7.0",
     "@itwin/appui-layout-react": "^3.7.0",
     "@itwin/appui-react": "^3.7.0",
     "@itwin/browser-authorization": "^0.5.1",
