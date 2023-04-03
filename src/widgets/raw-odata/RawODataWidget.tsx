@@ -14,7 +14,7 @@ import { useCallback, useState } from "react";
 import { ODataEntityValue, ODataTable } from "../../contexts/imodels-odata-client/interfaces/OData";
 import { InsightsClients, useInsightsClients } from "../../contexts/InsightsClientsContext";
 import DataSelectionFieldset from "../shared/DataSelectionFieldset";
-import ODataDataTable, { GroupMetadata, PropertyMetadata } from "../shared/ODataDataTable";
+import ODataDataTable, { GroupMetadata, PropertyMetadata } from "./ODataDataTable";
 import { getHiliteIds, zoomToElements } from "../shared/viewerUtils";
 
 

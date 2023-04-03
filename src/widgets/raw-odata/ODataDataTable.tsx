@@ -8,7 +8,7 @@ import { useEffect, useMemo } from "react";
 import { Group, QuantityType } from "@itwin/insights-client";
 import { Fieldset, Table } from "@itwin/itwinui-react";
 import { ODataEntityValue, ODataTable } from "../../contexts/imodels-odata-client/interfaces/OData";
-import { quantityTypeToDisplayUnits } from "./dataUtils";
+import { quantityTypeToDisplayUnits } from "../shared/dataUtils";
 
 /** Helper interface used for Group metadata */
 export interface GroupMetadata {
@@ -48,9 +48,9 @@ const ODataDataTable = ({ tableData, tableMetadata, quantityMetadata, isLoading,
       .filter((x) => !columnMask?.includes(x.name))
       .map((x) => ({
         id: x.name,
-        /** Column Header is a string formatted as "{name} {units}"
-         * Where {name} and {units} come from tableMetaData
-         * {units} must be looked up from the Quantity Type
+        /** Column Header is a string formatted as "{name} {units}".
+         * Where {name} and {units} come from tableMetaData.
+         * {units} must be looked up from the Quantity Type.
         */
         Header: `${x.name} ${(() => {
           const propLookup = quantityMetadata?.properties.filter((p) => p.name === x.name);

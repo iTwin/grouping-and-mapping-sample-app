@@ -14,7 +14,7 @@ import { useCallback, useState } from "react";
 import { ODataTable } from "../../contexts/imodels-odata-client/interfaces/OData";
 import { InsightsClients, useInsightsClients } from "../../contexts/InsightsClientsContext";
 import DataSelectionFieldset from "../shared/DataSelectionFieldset";
-import { GroupMetadata } from "../shared/ODataDataTable";
+import { GroupMetadata } from "../raw-odata/ODataDataTable";
 import { getHiliteIds, zoomToElements } from "../shared/viewerUtils";
 import GradientLegend from "./GradientLegend";
 
