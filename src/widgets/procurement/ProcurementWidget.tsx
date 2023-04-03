@@ -15,7 +15,7 @@ import ProcurementDataTable, { ProcurementTableItem } from "./ProcurementDataTab
 import { ODataEntityValue, ODataTable } from "../../contexts/imodels-odata-client/interfaces/OData";
 import { InsightsClients, useInsightsClients } from "../../contexts/InsightsClientsContext";
 import DataSelectionFieldset from "../shared/DataSelectionFieldset";
-import { GroupMetadata, PropertyMetadata } from "../shared/ODataDataTable";
+import { GroupMetadata, PropertyMetadata } from "../raw-odata/ODataDataTable";
 import { getHiliteIds, zoomToElements } from "../shared/viewerUtils";
 
 const ProcurementWidget = () => {

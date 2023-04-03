@@ -14,7 +14,7 @@ import { useCallback, useState } from "react";
 import { ODataTable } from "../../contexts/imodels-odata-client/interfaces/OData";
 import { InsightsClients, useInsightsClients } from "../../contexts/InsightsClientsContext";
 import DataSelectionFieldset from "../shared/DataSelectionFieldset";
-import { GroupMetadata } from "../shared/ODataDataTable";
+import { GroupMetadata } from "../raw-odata/ODataDataTable";
 import { getHiliteIds, zoomToElements } from "../shared/viewerUtils";
 import GradientLegend from "./GradientLegend";
 
@@ -40,21 +40,6 @@ const EnvironmentalImpactWidget = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [valueBounds, setValueBounds] = useState<{ min: number, max: number } | undefined>();
   const [quantityType, setQuantityType] = useState<QuantityType | undefined>(QuantityType.Undefined);
-
-  /** Helper function for loading data from a specified group. */
-  const loadGroupData = async (accessToken: string | undefined, iModelConnection: IModelConnection | undefined, insightsClients: InsightsClients, mappingId: string, groupName: string) => {
-    // validate the iModelConnection is established and fetch the raw Group Table data
-    if (!iModelConnection || !iModelConnection.iTwinId || !iModelConnection.iModelId || !iModelConnection.changeset || !accessToken || !mappingId) {
-      return;
-    }
-
-    return await insightsClients.iModelsOdataClient.getODataReportEntities(
-      accessToken,
-      iModelConnection.iModelId!,
-      iModelConnection.changeset.id,
-      mappingId!,
-      { name: "", url: groupName });
-  };
 
   /** Helper function for loading metadata from a specified group and property. */
   const loadMetadata = async (accessToken: string | undefined, iModelConnection: IModelConnection | undefined, insightsClients: InsightsClients, mappingId: string, groupName: string, propertyName: string) => {
@@ -208,21 +193,31 @@ const EnvironmentalImpactWidget = () => {
   }
 
   /** Handles configuration change events from the DataSelectionFieldset component. */
-  const onChangeConfiguration = useCallback(async (mappingId: string | null, tableMetaData: ODataTable | null, propertyName: string | null) => {
+  const onChangeConfiguration = useCallback(async (mappingId: string | null, groupMetadata: ODataTable | null, propertyName: string | null) => {
     setIsLoading(true);
     // if any of the required configurations are unset, don't do anything
-    if (!mappingId || !tableMetaData || !propertyName) {
+    if (!mappingId || !groupMetadata || !propertyName) {
       return;
     }
     
-    // load data for the selected group
-    let groupData = await loadGroupData(accessToken, iModelConnection, insightsClients, mappingId, tableMetaData.name);
+    // validate the iModelConnection is established and fetch the raw Group Table data
+    if (!iModelConnection || !iModelConnection.iTwinId || !iModelConnection.iModelId || !iModelConnection.changeset || !accessToken || !mappingId) {
+      return;
+    }
+    let groupData = await insightsClients.iModelsOdataClient.getODataReportEntities(
+      accessToken,
+      iModelConnection.iModelId!,
+      iModelConnection.changeset.id,
+      mappingId!,
+      { name: "", url: groupMetadata.name });
+
+    
     if (!groupData) {
       return;
     }
 
     // load metadata for the selected group
-    let metadata = await loadMetadata(accessToken, iModelConnection, insightsClients, mappingId, tableMetaData.name, propertyName);
+    let metadata = await loadMetadata(accessToken, iModelConnection, insightsClients, mappingId, groupMetadata.name, propertyName);
     setQuantityType(metadata?.properties[0].quantityType);
 
     // filter null/undefined values out of groupData

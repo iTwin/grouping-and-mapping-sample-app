@@ -4,11 +4,11 @@
 *--------------------------------------------------------------------------------------------*/
 import "./ODataDataTable.scss";
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Group, QuantityType } from "@itwin/insights-client";
 import { Fieldset, Table } from "@itwin/itwinui-react";
 import { ODataEntityValue, ODataTable } from "../../contexts/imodels-odata-client/interfaces/OData";
-import { quantityTypeToDisplayUnits } from "./dataUtils";
+import { quantityTypeToDisplayUnits } from "../shared/dataUtils";
 
 /** Helper interface used for Group metadata */
 export interface GroupMetadata {
@@ -42,6 +42,25 @@ interface ODataTableProps {
  *   of data and see the corresponding elements emphasized in the 3D Viewer.
  */
 const ODataDataTable = ({ tableData, tableMetadata, quantityMetadata, isLoading, onSelect, columnMask }: ODataTableProps) => {
+  // Define the column headers for the table
+  const columns = useMemo(() => {
+    return tableMetadata?.columns
+      .filter((x) => !columnMask?.includes(x.name))
+      .map((x) => ({
+        id: x.name,
+        /** Column Header is a string formatted as "{name} {units}".
+         * Where {name} and {units} come from tableMetaData.
+         * {units} must be looked up from the Quantity Type.
+        */
+        Header: `${x.name} ${(() => {
+          const propLookup = quantityMetadata?.properties.filter((p) => p.name === x.name);
+          const hasQuantity = propLookup && propLookup.length > 0 && propLookup[0].quantityType !== QuantityType.Undefined;
+          return hasQuantity
+            ? `(${quantityTypeToDisplayUnits(propLookup[0].quantityType)})`
+            : "";
+        })()}`,
+        accessor: x.name, }));
+  }, [tableMetadata, quantityMetadata, columnMask]);
 
   /** When new Table (Group) data is received, reset any emphasized elements in the 3D Viewer. */
   useEffect(() => {
@@ -60,19 +79,7 @@ const ODataDataTable = ({ tableData, tableMetadata, quantityMetadata, isLoading,
             <Table
               columns={[{
                 Header: "Header name",
-                columns: tableMetadata?.columns
-                  .filter((x) => !columnMask?.includes(x.name))
-                  .map((x) => ({
-                    id: x.name,
-                    Header: `${x.name} ${(() => {
-                      const propLookup = quantityMetadata?.properties.filter((p) => p.name === x.name);
-                      const hasQuantity = propLookup && propLookup.length > 0 && propLookup[0].quantityType !== QuantityType.Undefined;
-                      return hasQuantity
-                        ? `(${quantityTypeToDisplayUnits(propLookup[0].quantityType)})`
-                        : "";
-                    })()}`,
-                    accessor: x.name, }))
-                ?? [],
+                columns: columns ?? [],
               }]}
               data={[...tableData?.values() ?? []]}
               emptyTableContent="No data."
