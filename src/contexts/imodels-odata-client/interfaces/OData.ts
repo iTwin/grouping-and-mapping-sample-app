@@ -63,7 +63,7 @@ export interface ODataEntityResponse {
   "@odata.nextLink"?: string;
 }
 
-export interface ODataEntityValue { [key: string]: string | number | boolean | null}
+export interface ODataEntityValue { [key: string]: string | number | boolean | null }
 
 /**
  * OData MetaData table.

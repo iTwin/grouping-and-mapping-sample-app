@@ -20,7 +20,7 @@ import type { IIModelsOdataClient } from "./IIModelsOdataClient";
 import { XMLParser } from "fast-xml-parser";
 import { ODataTable } from "@itwin/insights-client";
 
-export class IModelsOdataClient extends OperationsBase implements IIModelsOdataClient{
+export class IModelsOdataClient extends OperationsBase implements IIModelsOdataClient {
   public async getODataReport(accessToken: AccessToken, iModelId: string, changesetId: string, mappingId: string): Promise<ODataResponse> {
     const url = `${this.basePath}/${encodeURIComponent(iModelId)}/changesets/${encodeURIComponent(changesetId)}/mappings/${encodeURIComponent(mappingId)}/odata`;
     const requestOptions: RequestInit = this.createRequest("GET", accessToken);
@@ -50,7 +50,7 @@ export class IModelsOdataClient extends OperationsBase implements IIModelsOdataC
     }
     const reportData: Array<ODataEntityValue> = [];
     const oDataReportEntitiesIt = this.getODataReportEntitiesIterator(accessToken, iModelId, changesetId, mappingId, odataItem);
-    for await(const oDataReportEntity of oDataReportEntitiesIt) {
+    for await (const oDataReportEntity of oDataReportEntitiesIt) {
       reportData.push(oDataReportEntity);
     }
     return reportData;
@@ -75,7 +75,7 @@ export class IModelsOdataClient extends OperationsBase implements IIModelsOdataC
             href: nextUrl,
           },
         };
-        if(response["@odata.nextLink"]) {
+        if (response["@odata.nextLink"]) {
           link.next = {
             href: response["@odata.nextLink"],
           };
@@ -98,7 +98,7 @@ export class IModelsOdataClient extends OperationsBase implements IIModelsOdataC
   private async parseXML(response: Response): Promise<ODataTable[]> {
     const options = {
       ignoreAttributes: false,
-      attributeNamePrefix : "",
+      attributeNamePrefix: "",
       transformTagName: (tagName: string) => tagName.charAt(0).toLowerCase() + tagName.slice(1),
     };
     const parser = new XMLParser(options);

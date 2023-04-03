@@ -7,7 +7,7 @@
  * @export
  * @interface Link
  */
- export interface Link {
+export interface Link {
   /**
    * Hyperlink to the specific entity.
    * @type {string}

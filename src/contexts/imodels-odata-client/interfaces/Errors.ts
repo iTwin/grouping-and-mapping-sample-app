@@ -7,7 +7,7 @@
  * @export
  * @interface ErrorDetails
  */
- export interface ErrorDetails {
+export interface ErrorDetails {
   /**
    * One of a server-defined set of error codes.
    * @type {string}
