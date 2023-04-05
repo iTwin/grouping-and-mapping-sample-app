@@ -130,7 +130,7 @@ const RawODataWidget = () => {
     if (!mappingId || !groupMetadata) {
       return;
     }
-    
+
     // validate the iModelConnection is established and fetch the raw Group Table data
     if (!iModelConnection || !iModelConnection.iTwinId || !iModelConnection.iModelId || !iModelConnection.changeset || !accessToken || !mappingId) {
       return;
@@ -155,10 +155,10 @@ const RawODataWidget = () => {
   return (
     <div className='widget-container'>
       <DataSelectionFieldset onChange={onChangeConfiguration} hidePropertySelect={true} />
-      { isLoading &&
-        <ProgressRadial indeterminate className="progress-spinner"/>
+      {isLoading &&
+        <ProgressRadial indeterminate className="progress-spinner" />
       }
-      { groupData && groupMetadata && quantityMetadata &&
+      {groupData && groupMetadata && quantityMetadata &&
         <ODataDataTable tableData={groupData} tableMetadata={groupMetadata} quantityMetadata={quantityMetadata} isLoading={isLoading} onSelect={onChangeTableSelection} />
       }
     </div>

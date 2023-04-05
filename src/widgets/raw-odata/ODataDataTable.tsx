@@ -42,7 +42,8 @@ interface ODataTableProps {
  *   of data and see the corresponding elements emphasized in the 3D Viewer.
  */
 const ODataDataTable = ({ tableData, tableMetadata, quantityMetadata, isLoading, onSelect, columnMask }: ODataTableProps) => {
-  // Define the column headers for the table
+
+  /** Define the column headers for the table. */
   const columns = useMemo(() => {
     return tableMetadata?.columns
       .filter((x) => !columnMask?.includes(x.name))
@@ -59,7 +60,8 @@ const ODataDataTable = ({ tableData, tableMetadata, quantityMetadata, isLoading,
             ? `(${quantityTypeToDisplayUnits(propLookup[0].quantityType)})`
             : "";
         })()}`,
-        accessor: x.name, }));
+        accessor: x.name,
+      }));
   }, [tableMetadata, quantityMetadata, columnMask]);
 
   /** When new Table (Group) data is received, reset any emphasized elements in the 3D Viewer. */
@@ -69,12 +71,12 @@ const ODataDataTable = ({ tableData, tableMetadata, quantityMetadata, isLoading,
 
   return (
     <div>
-      { !isLoading && 
+      {!isLoading &&
         <Fieldset legend="Mapping data table" className="odata-data-table">
           <div className="table">
             <div className="count-div">
               <span className="count-text">Count: </span>
-              <span>{ tableData?.length ?? "-" }</span>
+              <span>{tableData?.length ?? "-"}</span>
             </div>
             <Table
               columns={[{

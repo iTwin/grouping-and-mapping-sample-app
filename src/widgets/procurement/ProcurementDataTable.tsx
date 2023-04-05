@@ -12,7 +12,7 @@ import { quantityTypeToDisplayUnits, roundTo3 } from "../shared/dataUtils";
 import { GroupMetadata } from "../raw-odata/ODataDataTable";
 
 /** Properties added by reporting that we will ignore for Procurement. */
-const defaultProps = [ "ECInstanceId", "ECClassId", "BBoxLow", "BBoxHigh", "UserLabel" ];
+const defaultProps = ["ECInstanceId", "ECClassId", "BBoxLow", "BBoxHigh", "UserLabel"];
 
 /** Special case data columns for Procurement workflow. */
 const COL_IGNORE = "Ignore"; // Table data with an 'Ignore' column will be used to filter data rows.
@@ -39,16 +39,17 @@ export interface ProcurementTableItem {
  *   (or Table) selected. Entries in this table will be grouped by a specified property
  *   and their counts will be aggregated.
  */
- const ProcurementDataTable = ({ tableData, tableMetadata, quantityMetadata, isLoading, onSelect }: ProcurementTableProps) => {
+const ProcurementDataTable = ({ tableData, tableMetadata, quantityMetadata, isLoading, onSelect }: ProcurementTableProps) => {
   const [procurementData, setProcurementData] = useState<ProcurementTableItem[] | undefined>();
   const [totalCount, setTotalCount] = useState<number>(0);
-  // Define the column headers for the table
+
+  /** Define the column headers for the table. */
   const columns = useMemo(() => {
     return [
       ...tableMetadata?.columns
         .filter((x) => !defaultProps?.includes(x.name))
-        .map((x) => ({ 
-          id: x.name, 
+        .map((x) => ({
+          id: x.name,
           /** Column Header is a string formatted as "{name} {units}"
            * Where {name} and {units} come from tableMetaData
            * {units} must be looked up from the Quantity Type
@@ -59,8 +60,9 @@ export interface ProcurementTableItem {
             return hasQuantity
               ? `(${quantityTypeToDisplayUnits(propLookup[0].quantityType)})`
               : "";
-          })()}`, 
-          accessor: x.name, }))
+          })()}`,
+          accessor: x.name,
+        }))
       ?? [],
       ...procurementData ? [{ id: "Count", Header: "Count", accessor: "count" }] : [],
     ]
@@ -133,19 +135,19 @@ export interface ProcurementTableItem {
       procurementData.push(newEntry);
       totalCount += rows.length;
     });
-    
+
     setProcurementData(procurementData);
     setTotalCount(totalCount);
   }, [tableData, tableMetadata]);
 
   return (
     <div>
-      { !isLoading && 
+      {!isLoading &&
         <Fieldset legend="Bill of Materials" className="procurement-data-table">
           <div className="table">
             <div className="total-div">
               <span className="total-text">Total: </span>
-              <span>{ totalCount }</span>
+              <span>{totalCount}</span>
             </div>
             <Table
               columns={[{

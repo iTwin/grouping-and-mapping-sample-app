@@ -12,7 +12,7 @@ import type {
 } from "./interfaces/OData";
 import type { EntityListIterator } from "./iterators/EntityListIterator";
 
-export interface IIModelsOdataClient{
+export interface IIModelsOdataClient {
   /**
    * Lists all OData Entities for a Mapping.
    * @param {string} accessToken OAuth access token with scope `insights:read`.

@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { AbstractWidgetProps, AbstractZoneLocation, StagePanelLocation, StagePanelSection, UiItemsProvider } from "@itwin/appui-abstract";
+import { CommonWidgetProps, StagePanelLocation, StagePanelSection, UiItemsProvider } from "@itwin/appui-react";
 import RawODataWidget from "./RawODataWidget";
 
 export class RawODataWidgetProvider implements UiItemsProvider {
@@ -14,13 +14,11 @@ export class RawODataWidgetProvider implements UiItemsProvider {
     _stageUsage: string,
     _location: StagePanelLocation,
     _section?: StagePanelSection | undefined,
-    _zoneLocation?: AbstractZoneLocation | undefined,
-    _stageAppData?: any,
-  ): readonly AbstractWidgetProps[] {
-    const widgets: AbstractWidgetProps[] = [];
+  ): readonly CommonWidgetProps[] {
+    const widgets: CommonWidgetProps[] = [];
 
     if (_location === StagePanelLocation.Bottom && _section === StagePanelSection.Start) {
-      const rawODataWidget: AbstractWidgetProps = {
+      const rawODataWidget: CommonWidgetProps = {
         id: "RawODataWidget",
         label: "Raw OData",
         getWidgetContent: () => {
