@@ -91,7 +91,7 @@ const ProcurementWidget = () => {
    */
   const onChangeTableSelection = useCallback(async (selectedData: ProcurementTableItem[] | undefined) => {
     // don't need to do anything until a group table is selected
-    if (!groupData) {
+    if (!selectedData || !groupData) {
       return;
     }
 
@@ -106,22 +106,20 @@ const ProcurementWidget = () => {
     emph.clearOverriddenElements(vp);
     emph.wantEmphasis = true;
 
-    // reset to all elements hilited if no selections in table
-    if (!selectedData || selectedData.length === 0) {
-      const selected = groupData.map(x => (x.ECInstanceId as string));
-      const hiliteSet = await getHiliteIds(selected);
-      emph.emphasizeElements(hiliteSet, vp);
-      emph.overrideElements(hiliteSet, vp, ColorDef.red, undefined, false);
-      await zoomToElements(hiliteSet);
-      return;
+    // if no elements are selected, use all
+    let data = selectedData.length > 0 ? selectedData : groupData;
+
+    // unroll any grouped elements
+    if (data[0]["entities"] !== undefined) {
+      for (const row of selectedData) {
+        const rowEntities = JSON.parse(row["entities"] as string) as ODataEntityValue[];
+        data = [...data, ...rowEntities];
+      }
     }
+    // Map to just the element ids
+    const selected = data.map(x => (x.ECInstanceId as string));
 
     // emphasize the relevant elements
-    let selected: string[] = [];
-    for (const row of selectedData) {
-      const rowEntities = JSON.parse(row["entities"] as string) as ODataEntityValue[];
-      selected = [...selected, ...rowEntities.map(x => x.ECInstanceId as string)];
-    }
     const hiliteSet = await getHiliteIds(selected);
     emph.emphasizeElements(hiliteSet, vp);
     emph.overrideElements(hiliteSet, vp, ColorDef.red, undefined, false);
