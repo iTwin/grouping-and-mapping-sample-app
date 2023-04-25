@@ -70,7 +70,7 @@ const ProcurementDataTable = ({ tableData, tableMetadata, quantityMetadata, isLo
 
   /** When new Table (Group) data is received, reset any emphasized elements in the 3D Viewer. */
   useEffect(() => {
-    onSelect(undefined);
+    onSelect(tableData);
   }, [tableData, onSelect]);
 
   /** Compute aggregated Procurement table when new Table (Group) data is received. */
