@@ -39,9 +39,9 @@ import { GroupingMappingProvider } from "@itwin/grouping-mapping-widget";
 import { MappingsClient } from "@itwin/insights-client";
 import { IModelsOdataClient } from "./contexts/imodels-odata-client/IModelsOdataClient";
 import { InsightsClientsContext } from "./contexts/InsightsClientsContext";
-import { EnvironmentalImpactWidgetProvider } from "./widgets/environmental-impact/EnvironmentalImpactWidgetProvider";
 import { RawODataWidgetProvider } from "./widgets/raw-odata/RawODataWidgetProvider";
 import { ProcurementWidgetProvider } from "./widgets/procurement/ProcurementWidgetProvider";
+import { EnvironmentalImpactWidgetProvider } from "./widgets/environmental-impact/EnvironmentalImpactWidgetProvider";
 
 //#endregion
 
@@ -203,9 +203,9 @@ const App: React.FC = () => {
 
             // Add the GroupingMappingWidget, ProcurementWidget, EnvironmentalImpactWidget, and RawODataWidget to the Viewer here.
             new GroupingMappingProvider(),
+            new RawODataWidgetProvider(),
             new ProcurementWidgetProvider(),
             new EnvironmentalImpactWidgetProvider(),
-            new RawODataWidgetProvider(),
           ]}
         />
       </InsightsClientsContext.Provider>
