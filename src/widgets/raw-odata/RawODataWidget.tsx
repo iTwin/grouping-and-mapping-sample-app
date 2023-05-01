@@ -105,19 +105,22 @@ const RawODataWidget = () => {
       return;
     }
 
-    // if no elements are selected, use all
-    const data = selectedData.length > 0 ? selectedData : groupData;
-
     // clear the old selection
     const vp = IModelApp.viewManager.selectedView;
     const emph = EmphasizeElements.getOrCreate(vp);
     emph.clearOverriddenElements(vp);
     emph.wantEmphasis = true;
 
-    // emphasize the relevant elements
+
+    // if no elements are selected, use all
+    const data = selectedData.length > 0 ? selectedData : groupData;
+
+    // Map to just the element ids
     const selected = data.map(x => (x.ECInstanceId as string));
+   
+    // emphasize the relevant elements
     const hiliteSet = await getHiliteIds(selected);
-    vp.iModel.selectionSet.replace(hiliteSet);
+    vp.iModel.selectionSet.replace(hiliteSet); // triggeres interaction with the properties widgets
     emph.emphasizeElements(hiliteSet, vp);
     emph.overrideElements(hiliteSet, vp, ColorDef.red, undefined, false);
     await zoomToElements(hiliteSet);
@@ -158,9 +161,7 @@ const RawODataWidget = () => {
       {isLoading &&
         <ProgressRadial indeterminate className="progress-spinner" />
       }
-      {groupData && groupMetadata && quantityMetadata &&
-        <ODataDataTable tableData={groupData} tableMetadata={groupMetadata} quantityMetadata={quantityMetadata} isLoading={isLoading} onSelect={onChangeTableSelection} />
-      }
+      <ODataDataTable tableData={groupData} tableMetadata={groupMetadata} quantityMetadata={quantityMetadata} isLoading={isLoading} onSelect={onChangeTableSelection} />
     </div>
   );
 }
