@@ -32,6 +32,8 @@ import {
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { history } from "./history";
 
+import { GroupingMappingProvider } from "@itwin/grouping-mapping-widget";
+
 const App: React.FC = () => {
   const [iModelId, setIModelId] = useState(process.env.IMJS_IMODEL_ID);
   const [iTwinId, setITwinId] = useState(process.env.IMJS_ITWIN_ID);
@@ -170,6 +172,8 @@ const App: React.FC = () => {
             enableCopyingPropertyText: true,
           }),
           new MeasureToolsUiItemsProvider(),
+
+          new GroupingMappingProvider(),
         ]}
       />
     </div>

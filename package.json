@@ -23,7 +23,6 @@
     "@itwin/imodel-components-react": "^3.7.0",
     "@itwin/imodels-access-frontend": "^1.0.2",
     "@itwin/imodels-client-management": "^1.1.0",
-    "@itwin/insights-client": "^0.3.2",
     "@itwin/itwinui-icons-react": "^1.16.0",
     "@itwin/itwinui-react": "^1.48.1",
     "@itwin/measure-tools-react": "^0.7.3",
