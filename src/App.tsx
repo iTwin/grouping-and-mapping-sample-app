@@ -32,29 +32,6 @@ import {
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { history } from "./history";
 
-
-//#region START EDITS - Imports
-
-import { GroupingMappingProvider } from "@itwin/grouping-mapping-widget";
-import { MappingsClient } from "@itwin/insights-client";
-import { IModelsOdataClient } from "./contexts/imodels-odata-client/IModelsOdataClient";
-import { InsightsClientsContext } from "./contexts/InsightsClientsContext";
-import { RawODataWidgetProvider } from "./widgets/raw-odata/RawODataWidgetProvider";
-
-//#endregion
-
-//#region START EDITS - Init Reporting API Clients
-
-const mappingsClient = new MappingsClient();
-const iModelsOdataClient = new IModelsOdataClient();
-const insightsClients = {
-  mappingsClient,
-  iModelsOdataClient,
-};
-
-//#endregion
-
-
 const App: React.FC = () => {
   const [iModelId, setIModelId] = useState(process.env.IMJS_IMODEL_ID);
   const [iTwinId, setITwinId] = useState(process.env.IMJS_ITWIN_ID);
@@ -173,41 +150,28 @@ const App: React.FC = () => {
           </div>
         </FillCentered>
       )}
-
-      {/* #region START EDITS - Viewer Component Modifications */}
-
-      {/* Here we inject the InsightsClientsContext Provider to give access to the Reporting API client to our widgets. */}
-      <InsightsClientsContext.Provider value={insightsClients}>
-        <Viewer
-          iTwinId={iTwinId ?? ""}
-          iModelId={iModelId ?? ""}
-          authClient={authClient}
-          viewCreatorOptions={viewCreatorOptions}
-          enablePerformanceMonitors={true} // see description in the README (https://www.npmjs.com/package/@itwin/web-viewer-react)
-          onIModelAppInit={onIModelAppInit}
-          uiProviders={[
-            new ViewerNavigationToolsProvider(),
-            new ViewerContentToolsProvider({
-              vertical: {
-                measureGroup: false,
-              },
-            }),
-            new ViewerStatusbarItemsProvider(),
-            new TreeWidgetUiItemsProvider(),
-            new PropertyGridUiItemsProvider({
-              enableCopyingPropertyText: true,
-            }),
-            new MeasureToolsUiItemsProvider(),
-
-            // Add the GroupingMappingWidget, ProcurementWidget, EnvironmentalImpactWidget, and RawODataWidget to the Viewer here.
-            new GroupingMappingProvider(),
-            new RawODataWidgetProvider(),
-          ]}
-        />
-      </InsightsClientsContext.Provider>
-
-      {/* #endregion */}
-
+      <Viewer
+        iTwinId={iTwinId ?? ""}
+        iModelId={iModelId ?? ""}
+        authClient={authClient}
+        viewCreatorOptions={viewCreatorOptions}
+        enablePerformanceMonitors={true} // see description in the README (https://www.npmjs.com/package/@itwin/web-viewer-react)
+        onIModelAppInit={onIModelAppInit}
+        uiProviders={[
+          new ViewerNavigationToolsProvider(),
+          new ViewerContentToolsProvider({
+            vertical: {
+              measureGroup: false,
+            },
+          }),
+          new ViewerStatusbarItemsProvider(),
+          new TreeWidgetUiItemsProvider(),
+          new PropertyGridUiItemsProvider({
+            enableCopyingPropertyText: true,
+          }),
+          new MeasureToolsUiItemsProvider(),
+        ]}
+      />
     </div>
   );
 };
