@@ -6,7 +6,7 @@ import "./RawODataWidget.scss";
 
 import { useActiveIModelConnection, useActiveViewport } from "@itwin/appui-react";
 import { ColorDef } from "@itwin/core-common";
-import { EmphasizeElements, IModelApp, IModelConnection } from "@itwin/core-frontend";
+import { EmphasizeElements, IModelConnection } from "@itwin/core-frontend";
 import { Group } from "@itwin/insights-client";
 import { ProgressRadial } from "@itwin/itwinui-react";
 import { useAccessToken } from "@itwin/web-viewer-react";
@@ -120,11 +120,11 @@ const RawODataWidget = () => {
    
     // emphasize the relevant elements
     const hiliteSet = await getHiliteIds(selected);
-    vp.iModel.selectionSet.replace(hiliteSet); // triggeres interaction with the properties widgets
+    viewport.iModel.selectionSet.replace(hiliteSet); // triggeres interaction with the properties widgets
     emph.emphasizeElements(hiliteSet, viewport);
     emph.overrideElements(hiliteSet, viewport, ColorDef.red, undefined, false);
     await zoomToElements(hiliteSet);
-  }, [groupData]);
+  }, [groupData, viewport]);
 
   /** Handles configuration change events from the DataSelectionFieldset component. */
   const onChangeConfiguration = useCallback(async (mappingId: string | null, groupMetadata: ODataTable | null) => {

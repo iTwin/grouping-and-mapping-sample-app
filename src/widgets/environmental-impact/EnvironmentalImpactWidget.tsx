@@ -6,7 +6,7 @@ import "./EnvironmentalImpactWidget.scss";
 
 import { useActiveIModelConnection, useActiveViewport } from "@itwin/appui-react";
 import { ColorDef } from "@itwin/core-common";
-import { EmphasizeElements, IModelApp, IModelConnection } from "@itwin/core-frontend";
+import { EmphasizeElements, IModelConnection } from "@itwin/core-frontend";
 import { Group, ODataEntityValue, QuantityType } from "@itwin/insights-client";
 import { ProgressRadial } from "@itwin/itwinui-react";
 import { useAccessToken } from "@itwin/web-viewer-react";
@@ -227,6 +227,7 @@ const EnvironmentalImpactWidget = () => {
     // generate heatmap
     await generateHeatmap(groupData, propertyName);
     setIsLoading(false);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [iModelConnection, accessToken, insightsClients]);
 
   return (
