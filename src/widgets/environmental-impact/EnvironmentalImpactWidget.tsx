@@ -4,7 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 import "./EnvironmentalImpactWidget.scss";
 
-import { useActiveIModelConnection } from "@itwin/appui-react";
+import { useActiveIModelConnection, useActiveViewport } from "@itwin/appui-react";
 import { ColorDef } from "@itwin/core-common";
 import { EmphasizeElements, IModelApp, IModelConnection } from "@itwin/core-frontend";
 import { Group, ODataEntityValue, QuantityType } from "@itwin/insights-client";
@@ -35,6 +35,7 @@ interface HeatmapDataBin {
  */
 const EnvironmentalImpactWidget = () => {
   const iModelConnection = useActiveIModelConnection();
+  const viewport = useActiveViewport();
   const insightsClients = useInsightsClients();
   const accessToken = useAccessToken();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -105,15 +106,14 @@ const EnvironmentalImpactWidget = () => {
 
   /** Helper function to compute and render embodied carbon heatmap. */
   const generateHeatmap = async (groupData: ODataEntityValue[], propertyName: string): Promise<string[] | undefined> => {
-    // ensure IModelApp selectedView is available
-    if (!IModelApp.viewManager.selectedView) {
+    // ensure viewport is available
+    if (!viewport) {
       return;
     }
 
     // clear the old heatmap
-    const vp = IModelApp.viewManager.selectedView;
-    const emph = EmphasizeElements.getOrCreate(vp);
-    emph.clearOverriddenElements(vp);
+    const emph = EmphasizeElements.getOrCreate(viewport);
+    emph.clearOverriddenElements(viewport);
     emph.wantEmphasis = true;
 
     // generate the new heatmap
@@ -184,12 +184,12 @@ const EnvironmentalImpactWidget = () => {
     for (const bin of bins) {
       const colorDef = calculateHeatmapColorDef((bin.min + bin.max) / 2, minVal, maxVal);
       const hiliteSet = await getHiliteIds(bin.data.map(row => row["ECInstanceId"] as string));
-      emph.overrideElements(hiliteSet, vp, colorDef, undefined, false);
+      emph.overrideElements(hiliteSet, viewport, colorDef, undefined, false);
       allElements.push(...hiliteSet);
     }
 
     // emphasize the relevant elements
-    emph.emphasizeElements(allElements, vp);
+    emph.emphasizeElements(allElements, viewport);
     await zoomToElements(allElements);
   }
 
