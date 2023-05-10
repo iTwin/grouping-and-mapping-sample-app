@@ -9,7 +9,6 @@ import {
   ODataEntityResponse,
   ODataEntityValue,
   ODataItem,
-  ODataMetaDataSchema,
   ODataResponse,
 } from "./interfaces/OData";
 import type { EntityListIterator } from "./iterators/EntityListIterator";
@@ -17,7 +16,6 @@ import { EntityListIteratorImpl } from "./iterators/EntityListIteratorImpl";
 import { Collection, getEntityCollectionPage } from "./iterators/IteratorUtil";
 import { OperationsBase } from "./OperationsBase";
 import type { IIModelsOdataClient } from "./IIModelsOdataClient";
-import { XMLParser } from "fast-xml-parser";
 import { ODataTable } from "@itwin/insights-client";
 
 export class IModelsOdataClient extends OperationsBase implements IIModelsOdataClient {
@@ -96,37 +94,35 @@ export class IModelsOdataClient extends OperationsBase implements IIModelsOdataC
   }
 
   private async parseXML(response: Response): Promise<ODataTable[]> {
-    const options = {
-      ignoreAttributes: false,
-      attributeNamePrefix: "",
-      transformTagName: (tagName: string) => tagName.charAt(0).toLowerCase() + tagName.slice(1),
-    };
-    const parser = new XMLParser(options);
+    const parser = new DOMParser();
     const text = await response.text();
-    const parsedXML = parser.parse(text);
-    if (!parsedXML["edmx:Edmx"]["edmx:DataServices"].hasOwnProperty("schema")) {
+    const parsedXML = parser.parseFromString(text, "text/xml");
+    if (!parsedXML.getElementsByTagName("Schema").length) {
       return [];
     }
 
-    const schemas = this.makeArray<ODataMetaDataSchema>(parsedXML["edmx:Edmx"]["edmx:DataServices"].schema);
-    const defaultSchema = schemas.find(s => s.Namespace === "Default");
+    const schemas = Array.from(parsedXML.getElementsByTagName("Schema"));
+    const defaultSchema = schemas.find(s => s.getAttribute("Namespace") === "Default");
     if (defaultSchema === undefined) {
       return [];
     }
-    return this.makeArray(defaultSchema.entityType).map(t => {
+    return Array.from(defaultSchema.getElementsByTagName("EntityType")).map(t => {
+      const tName = t.getAttribute("Name");
+      if (!tName)
+        throw new Error("Invalid Entity Type in Schema");
       return {
-        name: t.Name,
-        columns: t.property.map(p => {
+        name: tName,
+        columns: Array.from(t.getElementsByTagName("Property")).map(p => {
+          const pName = p.getAttribute("Name");
+          const pType = p.getAttribute("Type");
+          if (!pName || !pType)
+            throw new Error("Invalid Property in Schema");
           return {
-            name: p.Name,
-            type: p.Type
+            name: pName,
+            type: pType,
           };
         })
       };
     });
-  }
-
-  private makeArray<T>(entity: T | Array<T>): Array<T> {
-    return entity instanceof Array ? entity : [entity];
   }
 }
