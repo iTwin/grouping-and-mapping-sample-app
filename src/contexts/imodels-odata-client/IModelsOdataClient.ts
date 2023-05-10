@@ -15,10 +15,9 @@ import type { EntityListIterator } from "./iterators/EntityListIterator";
 import { EntityListIteratorImpl } from "./iterators/EntityListIteratorImpl";
 import { Collection, getEntityCollectionPage } from "./iterators/IteratorUtil";
 import { OperationsBase } from "./OperationsBase";
-import type { IIModelsOdataClient } from "./IIModelsOdataClient";
 import { ODataTable } from "@itwin/insights-client";
 
-export class IModelsOdataClient extends OperationsBase implements IIModelsOdataClient {
+export class IModelsOdataClient extends OperationsBase {
   public async getODataReport(accessToken: AccessToken, iModelId: string, changesetId: string, mappingId: string): Promise<ODataResponse> {
     const url = `${this.basePath}/${encodeURIComponent(iModelId)}/changesets/${encodeURIComponent(changesetId)}/mappings/${encodeURIComponent(mappingId)}/odata`;
     const requestOptions: RequestInit = this.createRequest("GET", accessToken);
