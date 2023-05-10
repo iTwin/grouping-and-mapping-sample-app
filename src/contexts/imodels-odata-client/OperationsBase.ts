@@ -2,13 +2,10 @@
 * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
-import isomorphicFetch from "cross-fetch";
-
 const ACCEPT = "application/vnd.bentley.itwin-platform.v1+json";
 export const IMODELS_ODATA_BASE_PATH = "https://api.bentley.com/insights/imodels-odata";
 
 export class OperationsBase {
-  protected readonly fetch = isomorphicFetch;
   protected readonly basePath;
 
   constructor(basePath?: string) {
@@ -47,7 +44,7 @@ export class OperationsBase {
    * @memberof OperationsBase
    */
   protected async fetchData(nextUrl: string, requestOptions: RequestInit): Promise<Response> {
-    return this.fetch(
+    return fetch(
       nextUrl,
       requestOptions
     ).then((response) => {
