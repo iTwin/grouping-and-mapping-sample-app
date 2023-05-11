@@ -12,12 +12,12 @@ export class ProcurementWidgetProvider implements UiItemsProvider {
   public provideWidgets(
     _stageId: string,
     _stageUsage: string,
-    _location: StagePanelLocation,
-    _section?: StagePanelSection | undefined,
+    location: StagePanelLocation,
+    section?: StagePanelSection | undefined,
   ): readonly CommonWidgetProps[] {
     const widgets: CommonWidgetProps[] = [];
 
-    if (_location === StagePanelLocation.Bottom && _section === StagePanelSection.Start) {
+    if (location === StagePanelLocation.Bottom && section === StagePanelSection.Start) {
       const procurementWidget: CommonWidgetProps = {
         id: "ProcurementWidget",
         label: "Procurement",

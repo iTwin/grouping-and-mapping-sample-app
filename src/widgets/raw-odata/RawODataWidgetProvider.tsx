@@ -12,12 +12,12 @@ export class RawODataWidgetProvider implements UiItemsProvider {
   public provideWidgets(
     _stageId: string,
     _stageUsage: string,
-    _location: StagePanelLocation,
-    _section?: StagePanelSection | undefined,
+    location: StagePanelLocation,
+    section?: StagePanelSection | undefined,
   ): readonly CommonWidgetProps[] {
     const widgets: CommonWidgetProps[] = [];
 
-    if (_location === StagePanelLocation.Bottom && _section === StagePanelSection.Start) {
+    if (location === StagePanelLocation.Bottom && section === StagePanelSection.Start) {
       const rawODataWidget: CommonWidgetProps = {
         id: "RawODataWidget",
         label: "Raw OData",

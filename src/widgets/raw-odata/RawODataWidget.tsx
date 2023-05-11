@@ -4,9 +4,9 @@
 *--------------------------------------------------------------------------------------------*/
 import "./RawODataWidget.scss";
 
-import { useActiveIModelConnection } from "@itwin/appui-react";
+import { useActiveIModelConnection, useActiveViewport } from "@itwin/appui-react";
 import { ColorDef } from "@itwin/core-common";
-import { EmphasizeElements, IModelApp, IModelConnection } from "@itwin/core-frontend";
+import { EmphasizeElements, IModelConnection } from "@itwin/core-frontend";
 import { Group } from "@itwin/insights-client";
 import { ProgressRadial } from "@itwin/itwinui-react";
 import { useAccessToken } from "@itwin/web-viewer-react";
@@ -25,6 +25,7 @@ import { getHiliteIds, zoomToElements } from "../shared/viewerUtils";
  */
 const RawODataWidget = () => {
   const iModelConnection = useActiveIModelConnection();
+  const viewport = useActiveViewport();
   const insightsClients = useInsightsClients();
   const accessToken = useAccessToken();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -101,14 +102,13 @@ const RawODataWidget = () => {
     }
 
     // ensure IModelApp selectedView is available
-    if (!IModelApp.viewManager.selectedView) {
+    if (!viewport) {
       return;
     }
 
     // clear the old selection
-    const vp = IModelApp.viewManager.selectedView;
-    const emph = EmphasizeElements.getOrCreate(vp);
-    emph.clearOverriddenElements(vp);
+    const emph = EmphasizeElements.getOrCreate(viewport);
+    emph.clearOverriddenElements(viewport);
     emph.wantEmphasis = true;
 
 
@@ -120,11 +120,11 @@ const RawODataWidget = () => {
    
     // emphasize the relevant elements
     const hiliteSet = await getHiliteIds(selected);
-    vp.iModel.selectionSet.replace(hiliteSet); // triggeres interaction with the properties widgets
-    emph.emphasizeElements(hiliteSet, vp);
-    emph.overrideElements(hiliteSet, vp, ColorDef.red, undefined, false);
+    viewport.iModel.selectionSet.replace(hiliteSet); // triggeres interaction with the properties widgets
+    emph.emphasizeElements(hiliteSet, viewport);
+    emph.overrideElements(hiliteSet, viewport, ColorDef.red, undefined, false);
     await zoomToElements(hiliteSet);
-  }, [groupData]);
+  }, [groupData, viewport]);
 
   /** Handles configuration change events from the DataSelectionFieldset component. */
   const onChangeConfiguration = useCallback(async (mappingId: string | null, groupMetadata: ODataTable | null) => {
