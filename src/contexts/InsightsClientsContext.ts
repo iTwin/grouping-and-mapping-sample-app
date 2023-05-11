@@ -5,12 +5,11 @@
 
 import { MappingsClient } from "@itwin/insights-client";
 import { createContext, useContext } from "react";
-import { IIModelsOdataClient } from "./imodels-odata-client/IIModelsOdataClient";
 import { IModelsOdataClient } from "./imodels-odata-client/IModelsOdataClient";
 
 export interface InsightsClients {
   mappingsClient: MappingsClient;
-  iModelsOdataClient: IIModelsOdataClient;
+  iModelsOdataClient: IModelsOdataClient;
 }
 
 export const InsightsClientsContext = createContext<InsightsClients>({
