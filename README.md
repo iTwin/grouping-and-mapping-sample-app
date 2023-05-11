@@ -3,7 +3,7 @@ This app was bootstrapped using the iTwin Viewer [Create React App](https://www.
 
 ## About the Code
 
-This sample application demonstrates a possible path to consume data from iTwin Platform and consume it in a custom web app.  The Grouping & Mapping Widget assists with creating and managing Mappings and Groups against the Reporting Platform APIs.  With the data prepared by Grouping and Mapping, it’s consumed by the three custom widgets.
+This sample application demonstrates a possible path to prepare data from iTwin Platform and present it in a custom web app.  To this end, the Grouping & Mapping Widget assists with creating and managing Mappings and Groups against the Reporting Platform APIs.  With the data prepared by Grouping and Mapping, it’s present by the three custom widgets.
 1.	The Environmental Impact Widget takes Reporting data for any given iModel and re-colors elements in the 3D Viewer based on the values of a specified numeric data table column. Warmer colors (red) indicate larger values. And cooler colors (blue, green) indicate smaller values. This can be useful for visualizing all sorts of data gradients in the 3D Viewer such as embodied carbon, lead times, cost, etc. 
 2.	The Procurement Widget creates a summary report of element counts given a set of grouping criteria defined using Grouping and Mapping Properties. 
 3.	Finally, the Raw OData Widget is just a raw representation of the data being used to populate the other two workflow-oriented widgets.
