@@ -2,19 +2,19 @@
 * Copyright (c) Bentley Systems, Incorporated. All rights reserved.
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
-@import '~@itwin/itwinui-css/scss/variables';
+// @import '~@itwin/itwinui-css/scss/variables';
 
 .procurement-data-table {
   display: inherit;
   flex-direction: inherit;
-  gap: $iui-baseline;
-  margin-bottom: $iui-baseline;
+  gap: var(--iui-size-s);
+  margin-bottom: var(--iui-size-s);
 }
 
 .table {
-  padding: $iui-baseline;
+  padding: var(--iui-size-s);
   display: grid;
-  row-gap: $iui-baseline;
+  row-gap: var(--iui-size-s);
   overflow: hidden;
   column-width: auto;
 

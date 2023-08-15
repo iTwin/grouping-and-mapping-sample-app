@@ -3,7 +3,7 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 
-import { CommonWidgetProps, StagePanelLocation, StagePanelSection, UiItemsProvider } from "@itwin/appui-react";
+import { StagePanelLocation, StagePanelSection, UiItemsProvider, Widget } from "@itwin/appui-react";
 import EnvironmentalImpactWidget from "./EnvironmentalImpactWidget";
 
 export class EnvironmentalImpactWidgetProvider implements UiItemsProvider {
@@ -14,16 +14,14 @@ export class EnvironmentalImpactWidgetProvider implements UiItemsProvider {
     _stageUsage: string,
     location: StagePanelLocation,
     section?: StagePanelSection | undefined,
-  ): readonly CommonWidgetProps[] {
-    const widgets: CommonWidgetProps[] = [];
+  ): readonly Widget[] {
+    const widgets: Widget[] = [];
 
     if (location === StagePanelLocation.Bottom && section === StagePanelSection.Start) {
-      const environmentalWidget: CommonWidgetProps = {
+      const environmentalWidget: Widget = {
         id: "EnvironmentalImpactWidget",
         label: "Environmental Impact",
-        getWidgetContent: () => {
-          return <EnvironmentalImpactWidget />;
-        }
+        content: <EnvironmentalImpactWidget />,
       }
       widgets.push(environmentalWidget);
     }
